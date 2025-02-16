@@ -3,11 +3,36 @@ const homescreen = document.getElementById("homescreen");
 const gameContainer = document.getElementById("game-container");
 const startButton = document.getElementById("start-button");
 
+const toilet1 = document.getElementById("toilet-1");
+const toilet2 = document.getElementById("toilet-2");
+
 // Show the game container and hide the homescreen when the start button is clicked
 startButton.addEventListener("click", () => {
   homescreen.classList.add("hidden");
   gameContainer.classList.remove("hidden");
 });
+
+// Function to check if a toilet is off-screen
+function isOffScreen(toilet) {
+  const rect = toilet.getBoundingClientRect();
+  return rect.right < 0 || rect.left > window.innerWidth;
+}
+
+// Function to switch toilets
+function switchToilets() {
+  if (isOffScreen(toilet1)) {
+    toilet1.classList.add("hidden");
+    toilet2.classList.remove("hidden");
+    toilet2.style.animation = "float 10s linear infinite"; // Restart animation
+  } else if (isOffScreen(toilet2)) {
+    toilet2.classList.add("hidden");
+    toilet1.classList.remove("hidden");
+    toilet1.style.animation = "float 10s linear infinite"; // Restart animation
+  }
+}
+
+// Check for off-screen toilets every 100ms
+setInterval(switchToilets, 100);
 
 // Dialogue and story data
 const story = [
@@ -78,31 +103,65 @@ function chooseOption(nextStep) {
   currentStep = nextStep;
   updateGame();
 }
-// DOM elements
-const toilet1 = document.getElementById("toilet-1");
-const toilet2 = document.getElementById("toilet-2");
 
-// Function to check if a toilet is off-screen
-function isOffScreen(toilet) {
-  const rect = toilet.getBoundingClientRect();
-  return rect.right < 0 || rect.left > window.innerWidth;
-}
+// Particle System
+// Particle System
+const particleContainer = document.getElementById("particle-container");
 
-// Function to switch toilets
-function switchToilets() {
-  if (isOffScreen(toilet1)) {
-    toilet1.classList.add("hidden");
-    toilet2.classList.remove("hidden");
-    toilet2.style.animation = "float 10s linear infinite"; // Restart animation
-  } else if (isOffScreen(toilet2)) {
-    toilet2.classList.add("hidden");
-    toilet1.classList.remove("hidden");
-    toilet1.style.animation = "float 10s linear infinite"; // Restart animation
+// Create particles
+function createParticles() {
+  const numParticles = 200; // Number of particles
+  for (let i = 0; i < numParticles; i++) {
+    const particle = document.createElement("div");
+    particle.classList.add("particle");
+    particle.style.left = `${Math.random() * 100}vw`;
+    particle.style.top = `${Math.random() * 100}vh`;
+    particleContainer.appendChild(particle);
+
+    // Add random floating effect
+    floatParticle(particle);
   }
 }
 
-// Check for off-screen toilets every 100ms
-setInterval(switchToilets, 100);
+// Random floating effect
+function floatParticle(particle) {
+  const floatX = (Math.random() - 0.5) * 10; // Random X movement
+  const floatY = (Math.random() - 0.5) * 10; // Random Y movement
+  const duration = Math.random() * 3000 + 2000; // Random duration (2-5 seconds)
+
+  particle.animate(
+    [
+      { transform: `translate(${floatX}px, ${floatY}px)` },
+      { transform: `translate(${-floatX}px, ${-floatY}px)` },
+      { transform: `translate(${floatX}px, ${floatY}px)` },
+    ],
+    {
+      duration: duration,
+      iterations: Infinity,
+      easing: "ease-in-out",
+    }
+  );
+}
+
+// Move particles based on cursor position
+function moveParticles(event) {
+  const particles = document.querySelectorAll(".particle");
+  const mouseX = (event.clientX / window.innerWidth - 0.5) * 2; // Normalize cursor position
+  const mouseY = (event.clientY / window.innerHeight - 0.5) * 2;
+
+  particles.forEach((particle) => {
+    particle.style.transform = `translate(${mouseX}px, ${mouseY}px)`;
+  });
+}
+
+// Initialize particles and cursor interaction
+createParticles();
+document.addEventListener("mousemove", moveParticles);
+
+// Rest of your existing JavaScript code...
+  
+  // Rest of your existing JavaScript code...
+// Rest of your existing JavaScript code...
 
 // Start the game (after clicking the start button)
 updateGame();

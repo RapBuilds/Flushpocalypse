@@ -5,16 +5,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Flushpocalypse</title>
   <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 <body>
+
+    <div id="particle-container"></div>
+  <!-- Floating Toilets -->
+  <div id="toilet-container">
+    <div id="toilet-1" class="floating-toilet">
+      <img src="Assets/toilet.png" alt="Floating Toilet">
+    </div>
+    <div id="toilet-2" class="floating-toilet hidden">
+      <img src="Assets/toilet.png" alt="Floating Toilet">
+    </div>
+  </div>
+
   <!-- Homescreen -->
   <div id="homescreen">
     <h1>Flushpocalypse</h1>
     <p>The Multiversal Toilet Crisis</p>
     <button id="start-button">
-      <img src="start-button.png" alt="Start Button">
+      <img src="Assets/start-button.png" alt="Start Button">
     </button>
   </div>
+
   <!-- Game Container (hidden initially) -->
   <div id="game-container" class="hidden">
     <div id="dialogue-box">
@@ -27,29 +41,6 @@
     <div id="minigame-placeholder">
       <!-- Minigame area (e.g., pipe puzzle, toilet jousting) -->
     </div>
-  </div>
-  <div id="floating-toilet">
-    <div id="toilet-1" class="floating-toilet"> 
-        <img src="Assets/toilet.png" alt="Floating Toilet">
-    </div>
-
-    <div id="floating-toilet2">
-      <div id="toilet-2" class="floating-toilet"> 
-          <img src="Assets/toilet.png" alt="Floating Toilet">
-      </div>
-
-  <!-- Homescreen -->
-  <div id="homescreen">
-    <h1>Flushpocalypse</h1>
-    <p>The Multiversal Toilet Crisis</p>
-    <button id="start-button">
-      <img src="start-button.png" alt="Start Button">
-    </button>
-  </div>
-
-  <!-- Game Container (hidden initially) -->
-  <div id="game-container" class="hidden">
-    <!-- Game content here -->
   </div>
 
   <script src="script.js"></script>
